@@ -9,7 +9,6 @@ main = Blueprint('main', __name__, static_folder='public')
 def serve():
     return send_from_directory(main.static_folder, 'index.html')
 
-
 @main.route('/static/', methods=['GET', 'POST'])
 def static_root_path():
     return send_from_directory(main.static_folder, 'index.html')

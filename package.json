@@ -8,6 +8,6 @@
   "scripts": {
     "build": "yarn --cwd fe install && yarn --cwd fe build",
     "deploy": "cp -a fe/build/. app/main/public/",
-    "heroku-postbuild": "yarn build && yarn deploy"
+    "heroku-postbuild": "cd fe && npm install && npm build && cd .. && cp -a fe/build/. app/main/public/ "
   }
 }
