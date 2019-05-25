@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "yarn --cwd fe install && yarn --cwd fe build",
-    "deploy": "cp -a fe/build/. app/public/",
+    "deploy": "cp -a fe/build/. app/main/public/",
     "heroku-postbuild": "yarn build && yarn deploy"
   }
 }

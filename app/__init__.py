@@ -38,3 +38,7 @@ app.register_blueprint(bucketitems)
 from app.docs.views import docs
 
 app.register_blueprint(docs)
+
+from app.main.views import main
+
+app.register_blueprint(main)
