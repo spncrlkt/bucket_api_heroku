@@ -1,5 +1,5 @@
 var embed = new Apiary.Embed({
-    "subdomain": "kbucket",
+    "subdomain": "snooze",
     "preferences": {
         "element": "#documentation",
         "displayHttpMethods": true
