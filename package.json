@@ -6,8 +6,6 @@
     "yarn": "1.15.2"
   },
   "scripts": {
-    "build": "yarn --cwd fe install && yarn --cwd fe build",
-    "deploy": "cp -a fe/build/. app/main/public/",
     "heroku-postbuild": "cd fe && npm install && npm build && cd .. && mkdir app/main/public && cp -a fe/build/. app/main/public/ "
   }
 }
