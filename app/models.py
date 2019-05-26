@@ -244,3 +244,24 @@ class BucketItem(db.Model):
             'createdAt': self.create_at.isoformat(),
             'modifiedAt': self.modified_at.isoformat()
         }
+
+
+class Phrag(db.Model):
+    __tablename__ = 'phrags'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    text = db.Column(db.Text, nullable=False)
+
+    create_at = db.Column(db.DateTime, nullable=False)
+    modified_at = db.Column(db.DateTime, nullable=False)
+
+    def __init__(self, text):
+        self.text = text
+        self.create_at = datetime.datetime.utcnow()
+        self.modified_at = datetime.datetime.utcnow()
+
+    def json(self):
+        return {
+            'id': self.id,
+            'text': self.text,
+        }

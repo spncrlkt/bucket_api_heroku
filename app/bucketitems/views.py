@@ -1,6 +1,7 @@
 from flask import Blueprint, request, abort
 from app.auth.helper import token_required
-from app.bucketitems.helper import bucket_required, response, get_user_bucket, response_with_bucket_item, \
+from app.bucketitems.helper import \
+    bucket_required, response, get_user_bucket, response_with_bucket_item, \
     response_with_pagination, get_paginated_items
 from sqlalchemy import exc
 from app.models import BucketItem
@@ -79,7 +80,7 @@ def post(current_user, bucket_id):
     :param bucket_id: Bucket Id
     :return: Http Response
     """
-    if not request.content_type == 'application/json':
+    if 'application/json' in request.content_type:
         return response('failed', 'Content-type must be application/json', 401)
 
     data = request.get_json()
@@ -111,7 +112,7 @@ def edit_item(current_user, bucket_id, item_id):
     :param item_id: Item Id
     :return: Response of Edit Item
     """
-    if not request.content_type == 'application/json':
+    if 'application/json' not in request.content_type:
         return response('failed', 'Content-type must be application/json', 401)
 
     try:

@@ -19,7 +19,7 @@ class RegisterUser(MethodView):
         Register a user, generate their token and add them to the database
         :return: Json Response with the user`s token
         """
-        if request.content_type == 'application/json':
+        if 'application/json' in request.content_type:
             post_data = request.get_json()
             email = post_data.get('email')
             password = post_data.get('password')
@@ -40,7 +40,7 @@ class LoginUser(MethodView):
         Login a user if the supplied credentials are correct.
         :return: Http Json response
         """
-        if request.content_type == 'application/json':
+        if 'application/json' in request.content_type:
             post_data = request.get_json()
             email = post_data.get('email')
             password = post_data.get('password')

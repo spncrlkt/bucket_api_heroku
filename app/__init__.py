@@ -27,6 +27,7 @@ from app.auth.views import auth
 
 app.register_blueprint(auth)
 
+# TODO: kill buckets and docs
 from app.bucket.views import bucket
 
 app.register_blueprint(bucket)
@@ -38,6 +39,11 @@ app.register_blueprint(bucketitems)
 from app.docs.views import docs
 
 app.register_blueprint(docs)
+# end TODO
+
+from app.phrag.views import phrag
+
+app.register_blueprint(phrag)
 
 from app.main.views import main
 

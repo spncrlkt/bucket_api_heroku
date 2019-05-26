@@ -36,7 +36,7 @@ def create_bucketlist(current_user):
     :param current_user: Current User
     :return:
     """
-    if request.content_type == 'application/json':
+    if 'application/json' in request.content_type:
         data = request.get_json()
         name = data.get('name')
         if name:
@@ -77,7 +77,7 @@ def edit_bucket(current_user, bucket_id):
     :param bucket_id: Bucket Id
     :return: Http Json response
     """
-    if request.content_type == 'application/json':
+    if 'application/json' in request.content_type:
         data = request.get_json()
         name = data.get('name')
         if name:

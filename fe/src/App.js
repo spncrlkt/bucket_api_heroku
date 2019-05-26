@@ -1,35 +1,32 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 
 import axios from 'axios';
 
 import './App.css';
+import Login from './Login.js';
+import Register from './Register.js';
+import {reducer, initialState} from './state.js';
+
+const AppDispatch = React.createContext(null)
 
 function App() {
-  const [count, setCount] = useState(0)
-  useEffect(() => {
-    document.title = `you clicked ${count} times`
-  })
-
-  const [status, setStatus] = useState('no')
-  const loadEm = () => axios.get('/')
-    .then(res => setStatus(res.status))
-  useEffect(() => { loadEm() }, [])
+  const [appState, dispatch] = useReducer(reducer, initialState)
 
   return (
-    <div className="App">
-      <p>{status}</p>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-      <button onClick={() => setStatus('clear')}>
-        clear
-      </button>
-      <button onClick={loadEm}>
-        rack em
-      </button>
-    </div>
+    <AppDispatch.Provider value={dispatch}>
+      <div className="App">
+        <pre>{JSON.stringify(appState, null, 2)}</pre>
+        <Register />
+        <Login />
+        <p>
+          <button>
+            Click me
+          </button>
+        </p>
+      </div>
+    </AppDispatch.Provider>
   );
 }
 
 export default App;
+export { AppDispatch };
