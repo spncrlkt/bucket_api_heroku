@@ -16,7 +16,6 @@ function App() {
     <AppDispatch.Provider value={dispatch}>
       <div className="App">
         <pre>{JSON.stringify(appState, null, 2)}</pre>
-        <Register />
         <Login />
         <p>
           <button>
