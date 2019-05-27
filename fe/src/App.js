@@ -18,6 +18,7 @@ const SHOW_DEBUGGER = true
 
 export default function App() {
   const [dbg, setDbg] = useState(false)
+  const [dbgRC, setDbgRC] = useState(0)
   const [appState, dispatch] = useReducer(reducer, initialState)
   const select = getSelectors(appState)
   const acts = getActions(dispatch)
@@ -37,11 +38,13 @@ export default function App() {
   // INIT FETCH FOR LOGGEDIN USERS
   useEffect(() => {
     if (token) {
+      setDbgRC(dbgRC + 1)
       api.fetchPhrags()
     } else {
       acts.phr_load([])
     }
   }, [])
+
 
   return (
     <Conn.Provider value={conn}>
@@ -62,6 +65,7 @@ export default function App() {
         { SHOW_DEBUGGER && <div>
           <h2 onClick={() => setDbg(!dbg)}>~~~~DEBUGGER MODE~~~~~</h2>
           {dbg && <div>
+            <p>App Level render count: {dbgRC}</p>
             <Register />
             <pre>{JSON.stringify(appState, null, 2)}</pre>
           </div>}

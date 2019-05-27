@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
-// import AnimationTimer from 'animation-timer'
-// import Easer from 'functional-easing'
+import { AnimationTimer } from 'animation-timer'
+import { Easer } from 'functional-easing'
+import * as ClrMth from 'color-math';
 
 import styles from './Hdr.module.css'
 
@@ -40,14 +41,33 @@ const revClr = () => {
   return clr
 }
 
+function _dbl_clrs(clrs) {
+  const newClrs = []
+  let last = clrs[0]
+  for (let clr in clrs) {
+    if (clr === last) {
+      continue
+    } else {
+      newClrs.push(last)
+    }
+    last = clr
+  }
+}
+
+const _calc_clr_by_pct = (clrs, pc) => {
+}
 
 export default function Hdr() {
   const [clr, setClr] = useState('#5CE905')
   const mutClr = () => setClr(revClr())
 
-  // const easer = Easer
-  // console.log(easer)
-  // debugger;
+  /*
+  const easer = new Easer().using('in-cubic')
+  const tmr = new AnimationTimer()
+    .duration('5s')
+    .on('tick', (pc) => console.log(pc))
+    .play()
+  */
 
   return <h1 onClick={mutClr} className={styles.h1} style={{'color':clr}}>
     WELCOME 2.... PIMPY'S MIND PALACE
