@@ -62,7 +62,7 @@ def response(status, message, status_code):
     })), status_code
 
 
-def response_auth(status, message, token, status_code):
+def response_auth(status, message, token, status_code, user=None):
     """
     Make a Http response to send the auth token
     :param status: Status
@@ -74,5 +74,6 @@ def response_auth(status, message, token, status_code):
     return make_response(jsonify({
         'status': status,
         'message': message,
-        'auth_token': token.decode("utf-8")
+        'auth_token': token.decode("utf-8"),
+        'user': user.json() if user else None
     })), status_code

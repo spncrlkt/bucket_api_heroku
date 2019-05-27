@@ -1,0 +1,2 @@
+--ignore-dir=fe/build/
+--ignore-dir=app/main/public/

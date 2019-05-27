@@ -1,0 +1,9 @@
+.body {
+  background-color: #111;
+}
+.window {
+  display: flex;
+}
+.error {
+  background-color: red;
+}

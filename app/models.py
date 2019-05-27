@@ -14,6 +14,7 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     buckets = db.relationship('Bucket', backref='bucket', lazy='dynamic')
+    silos = db.relationship('Silo', backref='silo', lazy='dynamic')
 
     def __init__(self, email, password):
         self.email = email
@@ -29,6 +30,10 @@ class User(db.Model):
         """
         db.session.add(self)
         db.session.commit()
+        if not len(self.silos.all()):
+            s = Silo(owner_id=self.id)
+            db.session.add(s)
+            db.session.commit()
         return self.encode_auth_token(self.id)
 
     def encode_auth_token(self, user_id):
@@ -52,6 +57,16 @@ class User(db.Model):
             )
         except Exception as e:
             return e
+
+    def get_silo(self):
+        return self.silos[0] if len(self.silos.all()) else None
+
+    def json(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+        }
+
 
     @staticmethod
     def decode_auth_token(token):
@@ -246,6 +261,15 @@ class BucketItem(db.Model):
         }
 
 
+class Silo(db.Model):
+    __tablename__ = 'silos'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    phrags = db.relationship('Phrag', backref='phrag', lazy='dynamic')
+
+
 class Phrag(db.Model):
     __tablename__ = 'phrags'
 
@@ -255,8 +279,11 @@ class Phrag(db.Model):
     create_at = db.Column(db.DateTime, nullable=False)
     modified_at = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, text):
+    silo_id = db.Column(db.Integer, db.ForeignKey('silos.id'))
+
+    def __init__(self, silo_id, text):
         self.text = text
+        self.silo_id = silo_id
         self.create_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
 
@@ -265,3 +292,7 @@ class Phrag(db.Model):
             'id': self.id,
             'text': self.text,
         }
+
+    @staticmethod
+    def by_silo(silo, order_by=None):
+        return silo.phrags.order_by(order_by)

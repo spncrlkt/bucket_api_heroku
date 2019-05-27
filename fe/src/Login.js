@@ -1,43 +1,49 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 
-import axios from 'axios';
-import { AppDispatch } from './App.js';
-import { aTypes } from './state.js';
+import { Conn } from './App.js';
 
 
-export default function Login(props) {
-  const dispatch = useContext(AppDispatch)
+export default function Login() {
+  const {
+    api,
+    acts,
+    select,
+  } = useContext(Conn)
 
   const [email, setEmail] = useState('')
   const [pass, setPass] = useState('')
-  const submit = () => axios.post('/auth/login', {
+  const submit = () => api.post('/auth/login', {
     email,
     password: pass,
-  }).then(res => dispatch({
-    type: aTypes.AUTH_LOGIN,
-    data: res.data.auth_token,
-  }))
+  }).then(res => acts.auth_login(res.data.auth_token, res.data.user.email))
+  const logOff = () => acts.auth_logoff()
+  const curUser = select.curEmail();
 
   return <div>
-    <p>Login</p>
-    <input
-      value={email}
-      onChange={e => setEmail(e.target.value)}
-      placeholder="Email address"
-      type="email"
-      name="email"
-      required
-    />
-    <input
-      value={pass}
-      onChange={e => setPass(e.target.value)}
-      placeholder="Password"
-      type="password"
-      name="password"
-      required
-    />
-    <button type="submit" onClick={submit}>
-      Login
-    </button>
+    { curUser ? <div>
+      <button onClick={logOff}>
+        Log off
+      </button>
+    </div> : <div>
+      <input
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        placeholder="Email address"
+        type="email"
+        name="email"
+        required
+      />
+      <input
+        value={pass}
+        onChange={e => setPass(e.target.value)}
+        placeholder="Password"
+        type="password"
+        name="password"
+        required
+      />
+      <button onClick={submit}>
+        Login
+      </button>
+    </div> }
   </div>
 }
