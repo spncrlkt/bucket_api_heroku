@@ -18,7 +18,6 @@ const SHOW_DEBUGGER = true
 
 export default function App() {
   const [dbg, setDbg] = useState(false)
-  const [dbgRC, setDbgRC] = useState(0)
   const [appState, dispatch] = useReducer(reducer, initialState)
   const select = getSelectors(appState)
   const acts = getActions(dispatch)
@@ -37,19 +36,16 @@ export default function App() {
 
   // INIT FETCH FOR LOGGEDIN USERS
   useEffect(() => {
-    setDbgRC(dbgRC + 1)
     if (token) {
       api.fetchPhrags()
     } else {
       acts.phr_load([])
     }
-  }, [token, dbgRC, acts, api])
-  if (dbgRC > 100) { debugger; }
+  }, [])
 
   return (
     <Conn.Provider value={conn}>
       <div className={styles.body}>
-        <p>{dbgRC}</p>
         <Hdr />
         { token && <div>
           <div className={styles.window}>
