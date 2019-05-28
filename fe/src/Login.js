@@ -6,7 +6,7 @@ import Input from './Input.js'
 
 import styles from './Login.module.css'
 
-export default function Login() {
+export default function Login(props) {
   const {
     api,
     acts,
@@ -26,6 +26,9 @@ export default function Login() {
     { curUser ? <div>
       <Button onClick={logOff}>
         logoff
+      </Button>
+      <Button cls={styles.btn1} onClick={() => props.setFull(true)}>
+        beeg
       </Button>
     </div> : <div className={styles.form}>
       <Input

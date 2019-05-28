@@ -1,4 +1,4 @@
-.myButton {
+.btn {
   background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #111111), color-stop(1, #111111));
   background:-moz-linear-gradient(top, #111111 5%, #111111 100%);
   background:-webkit-linear-gradient(top, #111111 5%, #111111 100%);
@@ -19,7 +19,7 @@
   padding:4px 10px;
   text-decoration:none;
 }
-.myButton:hover {
+.btn:hover {
   background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #111111), color-stop(1, #111111));
   background:-moz-linear-gradient(top, #111111 5%, #111111 100%);
   background:-webkit-linear-gradient(top, #111111 5%, #111111 100%);
@@ -29,7 +29,7 @@
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#111111', endColorstr='#111111',GradientType=0);
   background-color:#111111;
 }
-.myButton:active {
+.btn:active {
   position:relative;
   top:1px;
 }

@@ -5,10 +5,12 @@
   "dependencies": {
     "animation-timer": "^1.0.12",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "color-math": "^1.1.2",
     "functional-easing": "^1.0.10",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-full-screen": "^0.2.4",
     "react-scripts": "3.0.1"
   },
   "scripts": {
