@@ -274,9 +274,10 @@ class Phrag(db.Model):
     __tablename__ = 'phrags'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # display_id
     text = db.Column(db.Text, nullable=False)
 
-    create_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False)
     modified_at = db.Column(db.DateTime, nullable=False)
 
     silo_id = db.Column(db.Integer, db.ForeignKey('silos.id'))
@@ -284,7 +285,7 @@ class Phrag(db.Model):
     def __init__(self, silo_id, text):
         self.text = text
         self.silo_id = silo_id
-        self.create_at = datetime.datetime.utcnow()
+        self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
 
     def json(self):
@@ -297,3 +298,19 @@ class Phrag(db.Model):
     @staticmethod
     def by_silo(silo, order_by=None):
         return silo.phrags.order_by(order_by)
+
+
+class Tag(db.Model):
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # display_id
+    title = db.Column(db.Text, nullable=False)
+    emoji = db.Column(db.String, nullable=False)
+
+    created_at = db.Column(db.DateTime, nullable=False)
+
+    def __init__(self, title, emoji):
+        self.text = title
+        self.emoji = emoji
+        self.created_at = datetime.datetime.utcnow()
