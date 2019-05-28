@@ -291,6 +291,7 @@ class Phrag(db.Model):
         return {
             'id': self.id,
             'text': self.text,
+            'modified_at': self.modified_at,
         }
 
     @staticmethod

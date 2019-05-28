@@ -11,7 +11,9 @@ export default function PhragList() {
   return <div>
     <div>
       {select.allPhrags().map((p) =>
-          <div onClick={() => acts.phr_select(p.id)} key={p.id}>{p.text}</div>)
+        <div onClick={() => acts.phr_select(p.id)} key={p.id}>
+          <span style={{'cursor':'pointer'}}>{p.text}</span>
+        </div>)
       }
     </div>
   </div>

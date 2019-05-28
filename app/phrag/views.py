@@ -1,4 +1,5 @@
 from flask import Blueprint, make_response, jsonify, request
+import datetime
 
 from app.auth.helper import token_required
 from app.models import User, Phrag
@@ -50,6 +51,7 @@ def update_phrag(current_user):
     id = data.get('id')
 
     p = db.session.query(Phrag).get(id)
+    p.modified_at = datetime.datetime.utcnow()
     p.text = text
 
     db.session.add(p)

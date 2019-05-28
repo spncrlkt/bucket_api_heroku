@@ -29,6 +29,11 @@ export default function App() {
   })
   api.fetchPhrags = () => api.get('/phrag/')
     .then(res => acts.phr_load(res.data.phrags))
+
+  useEffect(() => {
+    if (token) api.fetchPhrags()
+  }, [token])
+
   const conn = {
     api,
     acts,
@@ -52,11 +57,11 @@ export default function App() {
         <Hdr />
         { token && <div>
           <div className={styles.window}>
-            <div className="Left">
+            <div className={styles.left}>
               <NewPhrag />
               <PhragList />
             </div>
-            <div className="Right">
+            <div className={styles.right}>
               <MutPhrag selPhrag={select.selPhrag()}/>
             </div>
           </div>

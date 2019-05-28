@@ -2,7 +2,9 @@ import React, {useState, useContext} from 'react';
 
 import { Conn } from './App.js';
 
-export default function MutPhrag(props) {
+import styles from './NewPhrag.module.css'
+
+export default function NewPhrag(props) {
   const {
     api,
   } = useContext(Conn)
@@ -18,16 +20,17 @@ export default function MutPhrag(props) {
   })
 
 
-  return <div>
+  return <div className={styles.flx}>
     <input
       value={text}
       onChange={e => setText(e.target.value)}
+      className={styles.input}
       placeholder="write something"
       type="text"
       name="text"
       required
     />
-    <button onClick={submit}>
+    <button onClick={submit} className={styles.button}>
       add
     </button>
   </div>

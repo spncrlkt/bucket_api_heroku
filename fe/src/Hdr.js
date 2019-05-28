@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { AnimationTimer } from 'animation-timer'
 import { Easer } from 'functional-easing'
@@ -6,71 +6,89 @@ import * as ClrMth from 'color-math';
 
 import styles from './Hdr.module.css'
 
-
-/*
-ALT cOLORS
-color: #7CFC00;
-color: #7FFF00;
-color: #20C20E:
-  color: #5CE905;
-
-rainbow colors
-#e91405 - red
-#D98805 - orng
-#cbe905 - ylw
-#5CE905 - grn
-#2305e9 - blu
-#8F05DA - purp
-#e905ce - mgnta
-*/
-
-const rnbwClrs = [
-  '#e91405',
-  '#D98805',
-  '#cbe905',
+const rnbwClrs = _split_clrs(_split_clrs(_split_clrs([
   '#5CE905',
   '#2305e9',
   '#8F05DA',
   '#e905ce',
-]
+  '#e91405',
+  '#D98805',
+  '#cbe905',
+  '#5CE905',
+])))
 
-let idx = 0;
-const revClr = () => {
-  const clr = rnbwClrs[idx]
-  idx = (idx + 1) % rnbwClrs.length
-  return clr
-}
-
-function _dbl_clrs(clrs) {
+function _split_clrs(clrs) {
   const newClrs = []
+  const first = clrs[0]
   let last = clrs[0]
-  for (let clr in clrs) {
+  for (let clr of clrs) {
     if (clr === last) {
       continue
     } else {
       newClrs.push(last)
+      newClrs.push(ClrMth.evaluate(`${last} | ${clr}`).result.hex())
     }
     last = clr
   }
+  newClrs.push(ClrMth.evaluate(`${last} | ${first}`).result.hex())
+  return newClrs
 }
 
-const _calc_clr_by_pct = (clrs, pc) => {
+function _copy_clrs(clrs) {
+  return [...clrs, ...clrs]
+}
+
+const _test_clrs = (clrs) => _copy_clrs(_copy_clrs(clrs))
+
+const clrs = _test_clrs(rnbwClrs)
+
+const _calc_clr_by_pct = (pc) => {
+  const numClrs = clrs.length
+  const idx = Math.floor(pc * (numClrs-1))
+  return clrs[idx];
 }
 
 export default function Hdr() {
-  const [clr, setClr] = useState('#5CE905')
-  const mutClr = () => setClr(revClr())
+  const [isDone, setIsDone] = useState(false)
+  const [tick, setTick] = useState(0)
 
-  /*
-  const easer = new Easer().using('in-cubic')
+  const easer = new Easer().using('in-out-bounce')
   const tmr = new AnimationTimer()
-    .duration('5s')
-    .on('tick', (pc) => console.log(pc))
-    .play()
-  */
+    .duration('2s')
+    .on('tick', (pc) => setTick(pc))
 
-  return <h1 onClick={mutClr} className={styles.h1} style={{'color':clr}}>
-    WELCOME 2.... PIMPY'S MIND PALACE
-  </h1>
+  const stop = .4;
+  const run_len = .55;
 
+  return <div>
+    <h1 onClick={() => tmr.play()} className={styles.h1}>
+      <ColoredLetters clrs={clrs} tick={tick} stop={stop} run_len={run_len}>
+        WELCOME 2.... PIMPY'S MIND PALACE
+      </ColoredLetters>
+    </h1>
+  </div>
+}
+
+
+function ColoredLetters(props) {
+  const [ltrs, setLtrs] = useState(props.children.split(''))
+  const numLtrs = ltrs.length
+
+  const getLtr = (ltr, idx, tick) => {
+    const start_t = (props.stop / numLtrs) * idx
+    const t_run = tick - start_t
+    let color = props.clrs[0]
+    if (t_run > 0 && t_run < props.run_len) {
+      // find adj pct
+      color = _calc_clr_by_pct(t_run / props.run_len)
+    } else if (t_run >= props.run_len) {
+      color = props.clrs[props.clrs.length - 1]
+    }
+    return <span key={idx} style={{'color': color}}>
+      {ltr}
+    </span>
+  }
+  return <span>
+    {ltrs && ltrs.map((ltr, idx) => getLtr(ltr, idx, props.tick))}
+  </span>
 }
