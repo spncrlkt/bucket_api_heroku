@@ -1,8 +1,5 @@
 .flx {
   display: flex;
   justify-content: space-between;
-}
-.input {
-}
-.button {
+  margin-bottom: 20px;
 }

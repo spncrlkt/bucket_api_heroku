@@ -1,7 +1,10 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext} from 'react'
 
-import { Conn } from './App.js';
+import { Conn } from './App.js'
+import Button from './Button.js'
+import Input from './Input.js'
 
+import styles from './Login.module.css'
 
 export default function Login() {
   const {
@@ -19,31 +22,33 @@ export default function Login() {
   const logOff = () => acts.auth_logoff()
   const curUser = select.curEmail();
 
-  return <div>
+  return <div className={styles.cntnr}>
     { curUser ? <div>
-      <button onClick={logOff}>
-        Log off
-      </button>
-    </div> : <div>
-      <input
+      <Button onClick={logOff}>
+        logoff
+      </Button>
+    </div> : <div className={styles.form}>
+      <Input
         value={email}
         onChange={e => setEmail(e.target.value)}
-        placeholder="Email address"
+        placeholder="email"
         type="email"
         name="email"
         required
       />
-      <input
+      <Input
         value={pass}
         onChange={e => setPass(e.target.value)}
-        placeholder="Password"
+        placeholder="pass"
         type="password"
         name="password"
         required
       />
-      <button onClick={submit}>
-        Login
-      </button>
+      <div className={styles.button}>
+        <Button onClick={submit}>
+          login
+        </Button>
+      </div>
     </div> }
   </div>
 }

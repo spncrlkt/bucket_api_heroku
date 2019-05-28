@@ -1,0 +1,17 @@
+.input {
+  margin-right: 20px;
+  background-color:#111111;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border-radius:3px;
+  border:1px solid #5ce905;
+  display:inline-block;
+  color:#5ce905;
+  font-family:Courier New;
+  font-size:12px;
+  padding:4px 10px;
+  text-decoration:none;
+}
+.input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color:#5ce905;
+}

@@ -1,6 +1,8 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext} from 'react'
 
-import { Conn } from './App.js';
+import { Conn } from './App.js'
+import Button from './Button.js'
+import Input from './Input.js'
 
 import styles from './NewPhrag.module.css'
 
@@ -21,18 +23,16 @@ export default function NewPhrag(props) {
 
 
   return <div className={styles.flx}>
-    <input
+    <Input
       value={text}
       onChange={e => setText(e.target.value)}
-      className={styles.input}
-      placeholder="write something"
       type="text"
       name="text"
       required
     />
-    <button onClick={submit} className={styles.button}>
+    <Button onClick={submit}>
       add
-    </button>
+    </Button>
   </div>
 }
 

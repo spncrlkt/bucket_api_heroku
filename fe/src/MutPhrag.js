@@ -1,6 +1,9 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react'
 
-import { Conn } from './App.js';
+import { Conn } from './App.js'
+import Button from './Button.js'
+import Input from './Input.js'
+import styles from './MutPhrag.module.css'
 
 export default function MutPhrag(props) {
   const {
@@ -28,23 +31,24 @@ export default function MutPhrag(props) {
 
   return <div>
     { isEditing ? <div>
-      <input
+      <Input
         value={text}
         onChange={e => setText(e.target.value)}
-        placeholder="write something"
         type="text"
         name="text"
         required
       />
-      <button onClick={submit}>
+      <Button onClick={submit}>
         update
-      </button>
-    </div> : <div>
+      </Button>
+    </div> : <div onClick={() => setIsEditing(!isEditing)}>
       {text}
     </div> }
-    <button onClick={() => setIsEditing(!isEditing)}>
-      is edit
-    </button>
+    { isEditing && <div className={styles.btn}>
+      <Button onClick={() => setIsEditing(!isEditing)}>
+        back
+      </Button>
+    </div> }
 
   </div>
 }
