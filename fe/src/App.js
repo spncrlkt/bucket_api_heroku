@@ -14,7 +14,7 @@ import styles from './App.module.css'
 
 export const Conn = React.createContext(null)
 
-const SHOW_DEBUGGER = true
+const SHOW_DEBUGGER = false;
 
 export default function App() {
   const [dbg, setDbg] = useState(false)
