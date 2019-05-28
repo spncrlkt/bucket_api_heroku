@@ -3,7 +3,7 @@ import React, {useState, useEffect, useReducer} from 'react';
 import axios from 'axios';
 import Fullscreen from "react-full-screen";
 
-import Login from './Login.js';
+import Account from './Account.js';
 import Register from './Register.js';
 import PhragList from './PhragList.js';
 import MutPhrag from './MutPhrag.js';
@@ -71,7 +71,7 @@ export default function App() {
               </div>
             </div>
           </div>}
-          <Login isFull={isFull} setFull={setFull}/>
+          <Account isFull={isFull} setFull={setFull}/>
           { SHOW_DEBUGGER && <div>
             <h2 onClick={() => setDbg(!dbg)}>~~~~DEBUGGER MODE~~~~~</h2>
             {dbg && <div>

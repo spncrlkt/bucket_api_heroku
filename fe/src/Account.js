@@ -4,9 +4,9 @@ import { Conn } from './App.js'
 import Button from './Button.js'
 import Input from './Input.js'
 
-import styles from './Login.module.css'
+import styles from './Account.module.css'
 
-export default function Login(props) {
+export default function Account(props) {
   const {
     api,
     acts,
