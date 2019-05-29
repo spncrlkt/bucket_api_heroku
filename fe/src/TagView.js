@@ -28,7 +28,7 @@ export default function TagView() {
   }
 
   const submit = () => {
-    api.post('/phrags/tags/add', {
+    api.post('/phrag/tag/add', {
       emoji,
       title,
       alts,
@@ -57,7 +57,7 @@ export default function TagView() {
         />
       </div>
       <div style={{'marginBottom': '20px'}}>
-        <Button>
+        <Button onClick={submit}>
           save
         </Button>
       </div>

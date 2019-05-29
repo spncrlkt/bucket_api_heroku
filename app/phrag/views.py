@@ -2,7 +2,7 @@ from flask import Blueprint, make_response, jsonify, request
 import datetime
 
 from app.auth.helper import token_required
-from app.models import User, Phrag
+from app.models import User, Phrag, Tag
 from app import db
 
 phrag = Blueprint('phrag', __name__)

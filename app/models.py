@@ -315,7 +315,7 @@ class Tag(db.Model):
     silo_id = db.Column(db.Integer, db.ForeignKey('silos.id'))
 
     def __init__(self, title, emoji, alts, silo_id):
-        self.text = title
+        self.title = title
         self.emoji = emoji
         self.alts = alts
         self.silo_id = silo_id
