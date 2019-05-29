@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 
 import axios from 'axios';
 
+import Button from './Button.js'
+import Input from './Input.js'
+
 export default function Register() {
   const [email, setEmail] = useState('')
   const [pass, setPass] = useState('')
@@ -10,7 +13,7 @@ export default function Register() {
 
   return <div>
     <p>Register</p>
-    <input
+    <Input
       value={email}
       onChange={e => setEmail(e.target.value)}
       placeholder="Email address"
@@ -18,7 +21,7 @@ export default function Register() {
       name="email"
       required
     />
-    <input
+    <Input
       value={pass}
       onChange={e => setPass(e.target.value)}
       placeholder="Password"
@@ -26,8 +29,8 @@ export default function Register() {
       name="password"
       required
     />
-    <button type="submit" onClick={submit}>
-      Register
-    </button>
+    <Button type="submit" onClick={submit}>
+      reg
+    </Button>
   </div>
 }

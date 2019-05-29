@@ -4,22 +4,20 @@ import axios from 'axios';
 import Fullscreen from "react-full-screen";
 
 import Account from './Account.js';
-import Register from './Register.js';
-import PhragList from './PhragList.js';
-import MutPhrag from './MutPhrag.js';
-import NewPhrag from './NewPhrag.js';
+import Debugger from './Debugger.js';
+import PhragView from './PhragView.js';
+import TagView from './TagView.js';
 import Hdr from './Hdr.js';
 import Button from './Button.js'
-import {reducer, initialState, getSelectors, getActions} from './state.js';
+import {reducer, initialState, getSelectors, getActions, VIEWS} from './state.js';
 import styles from './App.module.css'
 
 
 export const Conn = React.createContext(null)
 
-const SHOW_DEBUGGER = false;
+const SHOW_DEBUGGER = true;
 
 export default function App() {
-  const [dbg, setDbg] = useState(false)
   const [dbgRC, setDbgRC] = useState(0)
 
   const [appState, dispatch] = useReducer(reducer, initialState)
@@ -46,6 +44,7 @@ export default function App() {
       setDbgRC(dbgRC + 1)
       api.fetchPhrags()
     } else {
+      setDbgRC(dbgRC + 1)
       acts.phr_load([])
     }
   }, [token])
@@ -57,29 +56,16 @@ export default function App() {
       <Fullscreen
         enabled={isFull}
         onChange={isFull => setFull(isFull)}>
-        <div className={styles.body}>
-          <br/>
+        <div className={styles.body}><br/>
           <Hdr />
-          { token && <div>
-            <div className={styles.window}>
-              <div className={styles.left}>
-                <NewPhrag />
-                <PhragList />
-              </div>
-              <div className={styles.right}>
-                <MutPhrag selPhrag={select.selPhrag()}/>
-              </div>
-            </div>
-          </div>}
+          { (token && select.currentView() === VIEWS.PHRAGS) &&
+            <PhragView /> }
+          { (token && select.currentView() === VIEWS.TAGS) &&
+            <TagView /> }
           <Account isFull={isFull} setFull={setFull}/>
-          { SHOW_DEBUGGER && <div>
-            <h2 onClick={() => setDbg(!dbg)}>~~~~DEBUGGER MODE~~~~~</h2>
-            {dbg && <div>
-              <p>App Level render count: {dbgRC}</p>
-              <Register />
-              <pre>{JSON.stringify(appState, null, 2)}</pre>
-            </div>}
-          </div>}
+          { SHOW_DEBUGGER && <Debugger
+            dbgRC={dbgRC}
+            appState={appState} /> }
         </div>
       </Fullscreen>
     </Conn.Provider>

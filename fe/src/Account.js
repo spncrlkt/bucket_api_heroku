@@ -3,6 +3,7 @@ import React, {useState, useContext} from 'react'
 import { Conn } from './App.js'
 import Button from './Button.js'
 import Input from './Input.js'
+import { VIEWS } from './state.js'
 
 import styles from './Account.module.css'
 
@@ -28,7 +29,13 @@ export default function Account(props) {
         logoff
       </Button>
       <Button cls={styles.btn1} onClick={() => props.setFull(true)}>
-        beeg
+        fs
+      </Button>
+      <Button cls={styles.btn1} onClick={() => acts.view_set(VIEWS.PHRAGS)}>
+        phrags
+      </Button>
+      <Button cls={styles.btn1} onClick={() => acts.view_set(VIEWS.TAGS)}>
+        tags
       </Button>
     </div> : <div className={styles.form}>
       <Input
