@@ -268,6 +268,7 @@ class Silo(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     phrags = db.relationship('Phrag', backref='phrag', lazy='dynamic')
+    tags = db.relationship('Tag', backref='tag', lazy='dynamic')
 
 
 class Phrag(db.Model):
@@ -311,7 +312,11 @@ class Tag(db.Model):
 
     created_at = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, title, emoji):
+    silo_id = db.Column(db.Integer, db.ForeignKey('silos.id'))
+
+    def __init__(self, title, emoji, alts, silo_id):
         self.text = title
         self.emoji = emoji
+        self.alts = alts
+        self.silo_id = silo_id
         self.created_at = datetime.datetime.utcnow()

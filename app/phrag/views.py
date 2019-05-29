@@ -44,7 +44,6 @@ def add_phrag(current_user):
 def update_phrag(current_user):
     user = User.get_by_id(current_user.id)
     silo = user.get_silo()
-    phrags = Phrag.by_silo(silo)
 
     data = request.get_json()
     text = data.get('text')
@@ -60,3 +59,25 @@ def update_phrag(current_user):
     return make_response(jsonify({
         'status': 'success',
     })), 200
+
+
+@phrag.route('/phrag/tag/add', methods=['POST'])
+@token_required
+def add_tag(current_user):
+    user = User.get_by_id(current_user.id)
+    silo = user.get_silo()
+
+    data = request.get_json()
+    title = data.get('title')
+    emoji = data.get('emoji')
+    alts = data.get('alts')
+
+    t = Tag(title, emoji, alts, silo.id)
+
+    db.session.add(t)
+    db.session.commit()
+
+    return make_response(jsonify({
+        'status': 'success',
+    })), 200
+

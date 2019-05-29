@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import EmojiPicker from 'emoji-picker-react'
+
+import { Conn } from './App.js';
 
 import Button from './Button.js'
 import Input from './Input.js'
 
 export default function TagView() {
+  const {
+    api,
+  } = useContext(Conn)
+
   const [emoji, setEmoji] = useState(null)
   const [title, setTitle] = useState('')
   const [alts, setAlts] = useState('')
@@ -13,16 +19,27 @@ export default function TagView() {
   const handleClick = (codePt, epObj) => {
     setAlts(epObj.name.replace(/_/g,' '))
     const fmtCodePt = `0x${codePt}`
-    setEmoji(String.fromCodePoint(fmtCodePt))
+    try {
+      setEmoji(String.fromCodePoint(fmtCodePt))
+    } catch {
+      // FLAGS??????????? AND WHAT ELSE??
+      console.error('WTF WTF WFT WFT')
+    }
   }
 
-  // const submit = () => 
+  const submit = () => {
+    api.post('/phrags/tags/add', {
+      emoji,
+      title,
+      alts,
+    }).then(res => console.log(res))
+  }
 
 
   return <div>
     { emoji && <div>
-      <div style={{'margin-bottom': '20px'}}>
-        <Button style={{'margin-right': '20px'}}>
+      <div style={{'marginBottom': '20px'}}>
+        <Button style={{'marginRight': '20px'}}>
           <span>
             {emoji}
           </span>
@@ -39,7 +56,7 @@ export default function TagView() {
           type="input"
         />
       </div>
-      <div style={{'margin-bottom': '20px'}}>
+      <div style={{'marginBottom': '20px'}}>
         <Button>
           save
         </Button>
