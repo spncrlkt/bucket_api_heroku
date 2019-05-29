@@ -8,8 +8,11 @@ import Input from './Input.js'
 export default function Register() {
   const [email, setEmail] = useState('')
   const [pass, setPass] = useState('')
-  const submit = () =>
-    axios.post('/auth/register', {email, password:pass}).then(res => console.log(res))
+
+  const submit = () => axios.post('/auth/register', {
+    email,
+    password: pass,
+  }).then(res => console.log(res))
 
   return <div>
     <p>Register</p>

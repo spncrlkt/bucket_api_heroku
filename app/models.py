@@ -277,7 +277,7 @@ class Phrag(db.Model):
     # display_id
     text = db.Column(db.Text, nullable=False)
 
-    created_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime, nullable=False)
 
     silo_id = db.Column(db.Integer, db.ForeignKey('silos.id'))
@@ -306,6 +306,7 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # display_id
     title = db.Column(db.Text, nullable=False)
+    alts = db.Column(db.Text)
     emoji = db.Column(db.String, nullable=False)
 
     created_at = db.Column(db.DateTime, nullable=False)
