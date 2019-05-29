@@ -320,3 +320,14 @@ class Tag(db.Model):
         self.alts = alts
         self.silo_id = silo_id
         self.created_at = datetime.datetime.utcnow()
+
+    def json(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'emoji': self.emoji,
+        }
+
+    @staticmethod
+    def by_silo(silo, order_by=None):
+        return silo.tags.order_by(order_by)

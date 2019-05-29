@@ -61,6 +61,17 @@ def update_phrag(current_user):
     })), 200
 
 
+@phrag.route('/phrag/tag', methods=['GET'])
+@token_required
+def get_tags(current_user):
+    user = User.get_by_id(current_user.id)
+    tags = Tag.by_silo(user.get_silo(), order_by=Tag.created_at.desc())
+    return make_response(jsonify({
+        'status': 'success',
+        'tags': [t.json() for t in tags],
+    })), 200
+
+
 @phrag.route('/phrag/tag/add', methods=['POST'])
 @token_required
 def add_tag(current_user):

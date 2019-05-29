@@ -15,6 +15,7 @@ export default function TagView() {
   const [emoji, setEmoji] = useState(null)
   const [title, setTitle] = useState('')
   const [alts, setAlts] = useState('')
+  const [tags, setTags] = useState(null)
 
   const handleClick = (codePt, epObj) => {
     setAlts(epObj.name.replace(/_/g,' '))
@@ -32,11 +33,30 @@ export default function TagView() {
       emoji,
       title,
       alts,
-    }).then(res => console.log(res))
+    }).then(res => {
+      setTitle('')
+      setAlts('')
+      setEmoji(null)
+    })
   }
 
+  const fetch = () => {
+    api.get('/phrag/tag').then(res => setTags(res.data.tags))
+  }
 
   return <div>
+    <div style={{'marginBottom': '20px'}}>
+      {tags && tags.map(t => {
+        return <Button style={{'marginRight': '20px'}}>
+          {t.emoji}
+        </Button>
+      })}
+    </div>
+    <div style={{'marginBottom': '20px'}}>
+      <Button onClick={fetch}>
+        fetch
+      </Button>
+    </div>
     { emoji && <div>
       <div style={{'marginBottom': '20px'}}>
         <Button style={{'marginRight': '20px'}}>
