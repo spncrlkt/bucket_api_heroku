@@ -1,5 +1,6 @@
 import os
-from flask import Blueprint, send_from_directory
+from flask import Blueprint, send_from_directory, make_response, jsonify
+from app.auth.helper import token_required
 
 main = Blueprint('main', __name__, static_folder='public')
 
@@ -8,6 +9,13 @@ main = Blueprint('main', __name__, static_folder='public')
 @main.route('/')
 def serve():
     return send_from_directory(main.static_folder, 'index.html')
+
+@main.route('/ok/')
+@token_required
+def ok(current_user):
+    return make_response(jsonify({
+        'status': 'success',
+    })), 200
 
 @main.route('/static/', methods=['GET', 'POST'])
 def static_root_path():

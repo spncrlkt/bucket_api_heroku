@@ -48,8 +48,8 @@ const _calc_clr_by_pct = (pc) => {
   return clrs[idx];
 }
 
-export default function Hdr() {
-  const [isDone, setIsDone] = useState(false)
+export default function Hdr(props) {
+  const [error, setError] = useState(null)
   const [tick, setTick] = useState(0)
 
   const easer = new Easer().using('in-out-bounce')
@@ -60,8 +60,20 @@ export default function Hdr() {
   const stop = .4;
   const run_len = .55;
 
+  const ping = (tmr) => {
+    tmr.play()
+    props.ping().then(res => {
+      tmr.play()
+    }).catch(err => {
+      setError('~:< SERVER"S DOWN BICTH GO 2 SLEEP >:~')
+      props.onPingFail()
+    })
+
+  }
+
   return <div>
-    <h1 onClick={() => tmr.play()} className={styles.h1}>
+    { error && <h1 className={styles.err}>{error} </h1>}
+    <h1 onClick={() => ping(tmr)} className={styles.h1}>
       <ColoredLetters clrs={clrs} tick={tick} stop={stop} run_len={run_len}>
         WELCOME 2.... PIMPY'S MIND PALACE
       </ColoredLetters>

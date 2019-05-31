@@ -15,7 +15,7 @@ import styles from './App.module.css'
 
 export const Conn = React.createContext(null)
 
-const SHOW_DEBUGGER = true;
+const SHOW_DEBUGGER = false;
 
 export default function App() {
   const [dbgRC, setDbgRC] = useState(0)
@@ -31,6 +31,15 @@ export default function App() {
   })
   api.fetchPhrags = () => api.get('/phrag/')
     .then(res => acts.phr_load(res.data.phrags))
+    .catch(err => {
+      if (err.response.status === 401) {
+        // logged out user, probably
+        acts.auth_logoff()
+      } else {
+        throw err
+      }
+    })
+  api.isOk = () => api.get('/ok/')
 
   const conn = {
     api,
@@ -45,7 +54,8 @@ export default function App() {
       api.fetchPhrags()
     } else {
       setDbgRC(dbgRC + 1)
-      acts.phr_load([])
+      // TODO: maybe need this... idk yet
+      // acts.phr_load([])
     }
   }, [token])
 
@@ -57,7 +67,7 @@ export default function App() {
         enabled={isFull}
         onChange={isFull => setFull(isFull)}>
         <div className={styles.body}><br/>
-          <Hdr />
+          <Hdr ping={api.isOk} onPingFail={() => acts.auth_logoff()}/>
           { (token && select.currentView() === VIEWS.PHRAGS) &&
             <PhragView /> }
           { (token && select.currentView() === VIEWS.TAGS) &&

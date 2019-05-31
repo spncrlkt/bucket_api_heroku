@@ -69,7 +69,7 @@ const VIEWS = keymirror({
   'TAGS': null,
 })
 
-const _view_is = VIEWS.TAGS
+const _view_is = VIEWS.PHRAGS
 
 function _view_rx(state, action) {
   switch (action.type) {
