@@ -13,13 +13,18 @@ export default function NewPhrag(props) {
 
   const initText = ''
   const [text, setText] = useState(initText)
+  const [inflite, setInflite] = useState(false)
 
-  const submit = () => api.post('/phrag/add', {
-    text,
-  }).then((res) => {
-    setText(initText)
-    api.fetchPhrags()
-  })
+  const submit = () => {
+    setInflite(true)
+    api.post('/phrag/add', {
+      text,
+    }).then((res) => {
+      setInflite(false)
+      setText(initText)
+      api.fetchPhrags()
+    })
+  }
 
 
   return <div className={styles.flx}>
@@ -31,7 +36,7 @@ export default function NewPhrag(props) {
       required
     />
     <Button onClick={submit}>
-      add
+      { inflite ? 'loading...' : 'add' }
     </Button>
   </div>
 }

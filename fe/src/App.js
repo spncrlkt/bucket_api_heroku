@@ -15,7 +15,7 @@ import styles from './App.module.css'
 
 export const Conn = React.createContext(null)
 
-const SHOW_DEBUGGER = false;
+const SHOW_DEBUGGER = true;
 
 export default function App() {
   const [dbgRC, setDbgRC] = useState(0)
